@@ -19,7 +19,7 @@ for doing that for Pluto.
 + Write a program that inverts the markdown and code segments (i.e. flips the
   code and markdown segments around).
 + Find a way to turn interactive elements into images. `Maybe this could be done
-  by making them into a PDF or SVG?`
+  by turning them into a PDF or SVG?`
 
 
 [mdata]: https://pandoc.org/MANUAL.html#metadata-blocks
