@@ -16,7 +16,7 @@ impossible---this is difficult enough to be challenging, but not so much that
 it's frustrating by programming standards.
 
 
-# Metadata
+# Make metadata
 The first thing I want to do is take care of generating a YAML metadata block.
 This is the first challenge to take care of---you don't read many books that
 don't have titles on the cover, unless you're reading some weird new Dadaist
@@ -27,5 +27,22 @@ function createMetadata() # I don't think this function needs many arguments
     titleBlock = "[frontmatter]"
     commentLine = "#> "
 end
+
+md"""
+# Put code into codeblocks
+"""
+
+md"""
+# Remove md blocks
+Remove the comments from md blocks so they act as regular markdown text.
+"""
+
+md"""
+# Enforce automatic linewidth limit
+Adds an break character after a line surpasses a set character limit. This of
+course considers whether or not a word is near the line, and does *not* just
+insert a linebreak willy-nilly.
+"""
+
 
 end # module --- !!! DO NOT DELETE !!!
