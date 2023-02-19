@@ -1,3 +1,5 @@
+module PlutoMd
+
 using Markdown
 using TOML
 
@@ -25,3 +27,5 @@ function createMetadata() # I don't think this function needs many arguments
     titleBlock = "[frontmatter]"
     commentLine = "#> "
 end
+
+end # module --- !!! DO NOT DELETE !!!
