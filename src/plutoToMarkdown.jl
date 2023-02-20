@@ -1,8 +1,3 @@
-module PlutoMd
-
-using Markdown
-using TOML
-
 md"""
 ---
 title: plutoMd.jl
@@ -16,6 +11,24 @@ impossible---this is difficult enough to be challenging, but not so much that
 it's frustrating by programming standards.
 
 
+# Open the file
+The first thing to do is open the notebook you want to convert, and turn it into
+text.
+"""
+
+function openFile(filename::String)
+    open(filename, "r") do f
+        l = 0
+
+        while ! eof(f)
+            s = readline(f)
+            l += 1
+            println("$line. $s")
+        end
+    end
+end
+
+md"""
 # Make metadata
 The first thing I want to do is take care of generating a YAML metadata block.
 This is the first challenge to take care of---you don't read many books that
@@ -23,9 +36,23 @@ don't have titles on the cover, unless you're reading some weird new Dadaist
 book that's never been seen before.
 """
 
-function createMetadata() # I don't think this function needs many arguments
+function createMetadata(text) # I don't think this function needs many arguments
     titleBlock = "[frontmatter]"
     commentLine = "#> "
+md"""
+In order to find the beginning and end of the front matter, all you need to do is
+find the first line, which always begins with "#> [frontmatter]", and the first
+line after it without a comment at the beginning. For example
+
+```jl
+#> [frontmatter]
+#> title = bla bla bla
+#> author = foo
+```
+"""
+    # this makes me miss Python's string handling a bit
+    firstLine = commentLine * titleBlock
+    lastLine = "\n"
 end
 
 md"""
@@ -43,6 +70,3 @@ Adds an break character after a line surpasses a set character limit. This of
 course considers whether or not a word is near the line, and does *not* just
 insert a linebreak willy-nilly.
 """
-
-
-end # module --- !!! DO NOT DELETE !!!
