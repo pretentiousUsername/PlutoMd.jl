@@ -1,4 +1,4 @@
-# PlutoPanMd.jl
+# PlutoToMd.jl
 
 PlutoPanMd.jl is a tool that converts [Pluto][pluto] notebooks into a markdown
 file.[^name] The main reason for this is quite personal—I like to typeset 
