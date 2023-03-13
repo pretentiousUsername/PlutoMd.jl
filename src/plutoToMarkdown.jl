@@ -52,15 +52,16 @@ function createMetadata(filename::String)
         lines = readlines(file)
         metaStart = 5 # first metadata line without [frontmatter]
 
-        titleArray::AbstractArray = []
+        titleArray::Array{String} = []
 
         # find the end of the frontmatter block
         for i in lines[metaStart:end]
             if isempty(i) == true
                 break
             else
-                println(i)
-                push!(titleArray, i)
+                j = string(i)
+                #println(j)
+                push!(titleArray, j)
             end
         end
 
