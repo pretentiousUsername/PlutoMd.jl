@@ -10,7 +10,7 @@ function deleteComment(line::String)
         line = join( deleteat!(line, 1), " " )
         return line
 
-    else
+    else # if this backfires, just swap the commented lines below
         return join(line, " ")
         #error("line is not commented.")
 
