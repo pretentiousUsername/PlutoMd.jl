@@ -3,6 +3,6 @@ module PlutoToMd
 using Markdown
 using TOML
 
-include("plutoToMarkdown.jl")
+include("metadata.jl")
 
 end # module --- !!! DO NOT DELETE !!!

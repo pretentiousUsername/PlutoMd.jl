@@ -2,9 +2,9 @@ using Markdown
 
 md"""
 ---
-title: plutoToMarkdown.jl
+title: metadata.jl
 author: Ian Mitchell
-purpose: Turn a Pluto notebook into a markdown file.
+purpose: Extract metadata from a pluto notebook and format it.
 ---
 
 There is a fair amount of work that needs to be done in order to turn a Pluto
@@ -13,11 +13,30 @@ impossible---this is difficult enough to be challenging, but not so much that
 it's frustrating by programming standards.
 
 
-# Open the file
-The first thing to do is open the notebook you want to convert, and turn it into
-text.
+# Delete comments and strings
+Before we can move on to more fun document stuff, a fair amount of the legwork
+will need to be done by deleting comments and strings.
 
+## Delete comments
+"""
 
+function deleteComment(line::String)
+    line = split(line)
+
+    commentNormal = "#"
+    commentFrontmatter = "#>"
+    
+    if ( line[1] == commentNormal ) || ( line[1] == commentFrontmatter )
+        line = join( deleteat!(line, 1), " " )
+        return line
+
+    else
+        error("Line is not commented.")
+
+    end
+end
+
+md"""
 # Make metadata
 The first thing I want to do is take care of generating a YAML metadata block.
 This is the first challenge to take care of---you don't read many books that
@@ -34,34 +53,35 @@ the first three lines in a Pluto notebook are always
 
 ```
 
+
 This means that for speed's sake, I don't really need to care about finding
 the frontmatter---all the program needs to do is skip down a few lines, then
 find the end of the front matter. In order to do that, the program just needs
 to find the last line with a `#>`, and then skip down a line after that.
+
+Now, let's get on with it.
+
+First, we'll create a function that makes the metadata an array of strings.
+
 """
 
 
-function createMetadata(filename::String)
-    commentLine = "#> "
-    #titleBlock = "[frontmatter]"
-    #fmBlock = commentLine * titleBlock # front matter block
-    
 
+function frontmatterToStrings(filename::String)
     open(filename, "r") do file
 
         lines = readlines(file)
-        metaStart = 5 # first metadata line without [frontmatter]
+        metaStart = 5
 
         titleArray::Array{String} = []
 
         # find the end of the frontmatter block
-        for i in lines[metaStart:end]
-            if isempty(i) == true
+        for line in lines[metaStart:end]
+            if isempty(line) == true
                 break
             else
-                j = string(i)
-                #println(j)
-                push!(titleArray, j)
+                lineString = string(line)
+                push!(titleArray, lineString)
             end
         end
 
@@ -101,4 +121,23 @@ course considers whether or not a word is near the line, and does *not* just
 insert a linebreak willy-nilly.
 """
 
-print(createMetadata("../testing/son.jl"))
+
+funny1 = "# OHHHH MY! OHHH! DUDE THE THING THAT EVERYBODY---! ONION!---OH UH I
+GOT AN ONION RING!"
+
+funny2 = "#> chomp chomp chomp"
+
+funny3 = "Brush your teeth if you want to not go to fucking jail kids."
+
+
+#jerma = [funny1, funny2, funny3]
+jerma = [funny1, funny2, funny3]
+
+for funny in jerma
+    println(deleteComment(funny))
+end
+
+#println( split( jerma[1] ) )
+#println( deleteComment( jerma[1] ) )
+
+#println(createMetadata("../testing/son.jl"))
