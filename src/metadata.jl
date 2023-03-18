@@ -1,5 +1,3 @@
-using Markdown
-
 function deleteComment(line::String)
     line = split(line)
 
