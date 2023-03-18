@@ -30,8 +30,14 @@ function deleteComment(line::String)
         line = join( deleteat!(line, 1), " " )
         return line
 
+md"""
+Rather than return an error, I figured it would be better to return the
+original string back without any modifications---if this backfires, just swap
+the comments between the following lines.
+"""
     else
-        error("Line is not commented.")
+        return join(line, " ")
+        #error("line is not commented.")
 
     end
 end
@@ -85,7 +91,7 @@ function frontmatterToStrings(filename::String)
             end
         end
 
-        println(titleArray)
+        return titleArray
    
     end
 end
@@ -105,22 +111,6 @@ The front matter usually looks something like this
 ```
 """
 
-md"""
-# Put code into codeblocks
-"""
-
-md"""
-# Remove md blocks
-Remove the comments from md blocks so they act as regular markdown text.
-"""
-
-md"""
-# Enforce automatic linewidth limit
-Adds an break character after a line surpasses a set character limit. This of
-course considers whether or not a word is near the line, and does *not* just
-insert a linebreak willy-nilly.
-"""
-
 
 funny1 = "# OHHHH MY! OHHH! DUDE THE THING THAT EVERYBODY---! ONION!---OH UH I
 GOT AN ONION RING!"
@@ -130,14 +120,10 @@ funny2 = "#> chomp chomp chomp"
 funny3 = "Brush your teeth if you want to not go to fucking jail kids."
 
 
-#jerma = [funny1, funny2, funny3]
-jerma = [funny1, funny2, funny3]
+#=jerma = [funny1, funny2, funny3]
 
 for funny in jerma
     println(deleteComment(funny))
-end
+end=#
 
-#println( split( jerma[1] ) )
-#println( deleteComment( jerma[1] ) )
-
-#println(createMetadata("../testing/son.jl"))
+#=println( deleteComment.( frontmatterToStrings("../testing/son.jl")  ) )=#
