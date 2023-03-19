@@ -1,6 +1,6 @@
 # PlutoToMd.jl
 
-## [Introduction][intro]
+## Introduction
 PlutoPanMd.jl is a tool that converts [Pluto][pluto] notebooks into a markdown
 file.[^name] The main reason for this is quite personal—I like to typeset 
 documents using my own [pandoc template][quetz], and I couldn't find any options
@@ -14,7 +14,7 @@ for doing that for Pluto.
 [quetz]: https://github.com/pretentiousUsername/quetzalcoatl
 
 
-## [To do][todo]
+## To do
 + Make a way to turn a notebook's front matter into a
   [YAML metadata block][mdata].
 + Write a program that inverts the markdown and code segments (i.e. flips the

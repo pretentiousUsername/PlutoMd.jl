@@ -5,6 +5,9 @@ author: Ian Mitchell
 license: BSD-3
 purpose: Extract metadata from a Pluto.jl notebook.
 ---
+
+**Note --** Some of the work in here is rather crude. There might be a lot of
+changes once I finish `boyerMoore.jl`.
 """
 
 """
