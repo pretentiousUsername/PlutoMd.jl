@@ -46,12 +46,12 @@ function getFrontmatter(filename::String)
     open(filename, "r") do file
 
         lines = readlines(file)
-        metaStart = 5
+        start = 5
 
         titleArray::Array{String} = []
 
         # find the end of the frontmatter block
-        for line in lines[metaStart:end]
+        for line in lines[start:end]
             if isempty(line) == true
                 break
             else
@@ -65,20 +65,34 @@ function getFrontmatter(filename::String)
     end
 end
 
+function newLine(text::String)
+    return text * "\n"
+end
+
 """
     encloseInBlock(text, block)
 
 Enclose a metadata header within a block of characters.
 """
-function encloseInBlock(text::String, block::String)
-    block = block * "\n"
-    return block * text * "\n" * block * "\n"
+function encloseInBlock(text::Array{String}, block::String)
+    endOfText = length(text) + 2 # the +2 is because endOfText updates after the
+    segments = [1, endOfText]    # first for-loop iteration.
+    
+    for segment in segments
+        block *= '\n'
+        text = insert!(text, segment, block)
+    end
+
+    return text
 end
 
 # I prefer YAML, but TOML is easier to make from the start. I'll do YAML later.
 function makeTomlMetadata(titleArray::Array{String})
-    block = "+++"
-    
+    blockCharacters = "+++" # see pandoc's documentation
+
+    titleArray = deleteComment.(titleArray)
+    titleArray = newLine.(titleArray)
+    return encloseInBlock(titleArray, blockCharacters)
 end
 
 
@@ -96,4 +110,7 @@ for funny in jerma
     println(deleteComment(funny))
 end=#
 
-println( deleteComment.( getFrontmatter("../testing/son.jl")  ) )
+titleBlock = getFrontmatter("../testing/son.jl")
+titleBlock = makeTomlMetadata(titleBlock)
+
+println( join(titleBlock) )
