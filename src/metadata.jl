@@ -14,6 +14,7 @@ Deletes the comments from an input string.
 """
 function deleteComment(line::String)
     line = split(line)
+    space = " "
 
     commentNormal = "#"
     commentFrontmatter = "#>"
@@ -23,7 +24,7 @@ function deleteComment(line::String)
         return line
 
     else # if this backfires, just swap the commented lines below
-        return join(line, " ")
+        return join(line, space)
         #error("line is not commented.")
 
     end
@@ -69,6 +70,12 @@ function newLine(text::String)
     return text * "\n"
 end
 
+function preformatMetadata(text)
+    text = deleteComment(text)
+    text = newLine(text)
+    return text
+end
+
 """
     encloseInBlock(text, block)
 
@@ -86,31 +93,32 @@ function encloseInBlock(text::Array{String}, block::String)
     return text
 end
 
-# I prefer YAML, but TOML is easier to make from the start. I'll do YAML later.
 function makeTomlMetadata(titleArray::Array{String})
     blockCharacters = "+++" # see pandoc's documentation
-
-    titleArray = deleteComment.(titleArray)
-    titleArray = newLine.(titleArray)
+    titleArray = preformatMetadata(titleArray)
     return encloseInBlock(titleArray, blockCharacters)
 end
 
+# For some reason this function strips the '\n' characters.
+function tomlToYaml(text::String)
+    text = split(text)
+    space = " "
 
-#=funny1 = "# OHHHH MY! OHHH! DUDE THE THING THAT EVERYBODY---! ONION!---OH UH I
-GOT AN ONION RING!"
+    if text[2] == "="
+        text[1] = text[1] * ':'
+        deleteat!(text, 2)
+    else
+        nothing
+    end
 
-funny2 = "#> chomp chomp chomp"
+    text = newLine( join(text, space) )
+    return text
+end
 
-funny3 = "Brush your teeth if you want to not go to fucking jail kids."
+function makeYamlMetadata(titleArray::Array{String})
+    blockCharacters = "---"
+    titleArray = preformatMetadata.(titleArray)
+    titleArray = tomlToYaml.(titleArray)
+    return encloseInBlock(titleArray, blockCharacters)
+end
 
-
-jerma = [funny1, funny2, funny3]
-
-for funny in jerma
-    println(deleteComment(funny))
-end=#
-
-titleBlock = getFrontmatter("../testing/son.jl")
-titleBlock = makeTomlMetadata(titleBlock)
-
-println( join(titleBlock) )
