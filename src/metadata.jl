@@ -15,7 +15,7 @@ changes once I finish `boyerMoore.jl`.
 
 Deletes the comments from an input string.
 """
-function deleteComment(line::String)
+function deleteComment(line::String) # I think this could be edited a bit
     line = split(line)
     space = " "
 
@@ -124,4 +124,3 @@ function makeYamlMetadata(titleArray::Array{String})
     titleArray = tomlToYaml.(titleArray)
     return encloseInBlock(titleArray, blockCharacters)
 end
-
