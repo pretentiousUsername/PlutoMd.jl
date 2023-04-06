@@ -5,12 +5,9 @@ author: Ian Mitchell
 license: BSD-3
 purpose: Extract metadata from a Pluto.jl notebook.
 ---
-
-**Note --** Some of the work in here is rather crude. There might be a lot of
-changes once I finish `boyerMoore.jl`.
 """
 
-"""
+#="""
     deleteComment(line)
 
 Deletes the comments from an input string.
@@ -31,7 +28,7 @@ function deleteComment(line::String) # I think this could be edited a bit
         #error("line is not commented.")
 
     end
-end
+end=#
 
 
 """
