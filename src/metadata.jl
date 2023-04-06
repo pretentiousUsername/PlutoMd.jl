@@ -41,7 +41,7 @@ there?---do I care about security?
 """
     getFrontmatter(filename)
 
-Extract the frontmatter from a Pluto noteboke.
+Extract the frontmatter from a Pluto notebook.
 """
 function getFrontmatter(filename::String)
     open(filename, "r") do file
