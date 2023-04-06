@@ -15,8 +15,8 @@ for doing that for Pluto.
 
 
 ## To do
-+ Make a way to turn a notebook's front matter into a
-  [YAML metadata block][mdata].
++ ~~Make a way to turn a notebook's front matter into a
+  [YAML metadata block][mdata].~~
 + Write a program that inverts the markdown and code segments (i.e. flips the
   code and markdown segments around).
 + Find out how to render images so they can be put into a markdown file. `This
