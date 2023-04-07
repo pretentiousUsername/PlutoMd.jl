@@ -1,14 +1,12 @@
 #module PlutoToMd
 
 using Markdown
-#using TOML
 
 include("textHandling.jl")
 #include("metadata.jl")
 include("ordering.jl")
 
-#println(findOrder("../testing/simpleAs.jl"))
+println(getOrder("../testing/simpleAs.jl"))
 
-findCells("../testing/simpleAs.jl")
 
 #end # module --- !!! DO NOT DELETE !!!

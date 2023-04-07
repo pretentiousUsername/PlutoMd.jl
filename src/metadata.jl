@@ -7,37 +7,6 @@ purpose: Extract metadata from a Pluto.jl notebook.
 ---
 """
 
-#="""
-    deleteComment(line)
-
-Deletes the comments from an input string.
-"""
-function deleteComment(line::String) # I think this could be edited a bit
-    line = split(line)
-    space = " "
-
-    commentNormal = "#"
-    commentFrontmatter = "#>"
-    
-    if ( line[1] == commentNormal ) || ( line[1] == commentFrontmatter )
-        line = join( deleteat!(line, 1), " " )
-        return line
-
-    else # if this backfires, just swap the commented lines below
-        return join(line, space)
-        #error("line is not commented.")
-
-    end
-end=#
-
-
-"""
-I'm a bit iffy on this. I think I want to try opening and closing files as little
-as possible for vague aesthetic reasons. Maybe there's some added security in
-there?---do I care about security?
-"""
-
-
 """
     getFrontmatter(filename)
 
