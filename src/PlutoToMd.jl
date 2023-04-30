@@ -6,7 +6,11 @@ include("textHandling.jl")
 #include("metadata.jl")
 include("ordering.jl")
 
-println(getOrder("../testing/simpleAs.jl"))
+gloop = getOrder("../testing/simpleAs.jl")
+
+determineIfConfigCell(gloop[end])
+
+#println(getOrder("../testing/simpleAs.jl"))
 
 
-#end # module --- !!! DO NOT DELETE !!!
+#end # module

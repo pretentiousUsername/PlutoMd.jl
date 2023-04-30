@@ -45,7 +45,10 @@ function deleteCellLine(line::String)
     end
 end
 
-
+"""
+Because Pluto uses some weird characters, I had to get a little weird with it
+for this function.
+"""
 function deleteOrderBar(line::String)
     line = deleteComment(line)
     
@@ -70,4 +73,20 @@ end
 
 function deleteCommentOrder(line::String)
     return deleteComment( deleteOrderBar(line) )
+end
+
+"""
+The final cells in a Pluto notebook---usually the TOML files---have a format
+a bit like this: 00000000-0000-0000-0000-00000000000n. So I just need to split
+them up, and if the sum of all of the numbers is 0, then it can be safely
+discarded from the list. The maximum number of integers here is 12, so I'll
+assume each number is a sixteen bit integer.
+"""
+function determineIfConfigCell(cellTitle::String)
+    cellTitle = split(cellTitle, "-")
+
+    sums = [begin # sorry if this is a bit terse
+            numbers = [parse(Int16, number) for number in substring]
+            sum(numbers)
+            end for substring in cellTitle]
 end
